@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:kegiatan1ab/getDetail.dart';
 import 'package:kegiatan1ab/getVaccine.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class homePage extends StatefulWidget {
-  const homePage({Key? key}) : super(key: key);
+  final String? name, nim;
+  const homePage({Key? key, required this.name, required this.nim})
+      : super(key: key);
 
   @override
   State<homePage> createState() => _homePageState();
@@ -11,6 +14,22 @@ class homePage extends StatefulWidget {
 
 class _homePageState extends State<homePage> {
   final _fiture = ["certivicate", "result", "ehac"];
+  // late SharedPreferences loginData;
+  // String username = "";
+
+  // @override
+  // initState() {
+  //   super.initState();
+  //   initial();
+  // }
+
+  // void initial() async {
+  //   loginData = await SharedPreferences.getInstance();
+  //   setState(() {
+  //     username = loginData.getString('username')!;
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,8 +43,8 @@ class _homePageState extends State<homePage> {
             Icons.supervised_user_circle_outlined,
             color: Colors.black,
           ),
-          title: const Text(
-            "Hi, There",
+          title: Text(
+            "Hi, ${widget.nim}",
             style: TextStyle(color: Colors.black, fontSize: 15),
           ),
           actions: const [
