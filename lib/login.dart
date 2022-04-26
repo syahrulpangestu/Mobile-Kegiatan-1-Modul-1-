@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:kegiatan1ab/dummy_data.dart';
 import 'package:kegiatan1ab/homePage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 
 class loginPage extends StatefulWidget {
   const loginPage({Key? key}) : super(key: key);
@@ -12,14 +13,12 @@ class loginPage extends StatefulWidget {
 
 class _loginPageState extends State<loginPage> {
   // GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  String? _nim;
-  String? _name;
-  bool? _checkLogin;
-
+  // String _idNumber = "";
+  // String _name = "";
   TextEditingController controllerUSername = TextEditingController();
   TextEditingController controllerPassword = TextEditingController();
 
-  late SharedPreferences storeData;
+  late SharedPreferences loginData;
   late bool checkLogin;
 
   @override
@@ -95,51 +94,65 @@ class _loginPageState extends State<loginPage> {
                             child: ElevatedButton(
                               child: Text("Submit"),
                               onPressed: () async {
-                                storeData =
-                                    await SharedPreferences.getInstance();
+                                // final storeData =
+                                //     await SharedPreferences.getInstance();
+                                // for (var data in DummyData.data) {
+                                //   print("cek");
+                                //   if ((controllerUSername.text ==
+                                //       data['username'])) {
+                                //     await storeData.setString(
+                                //         'nim', data['Nim']);
+                                //     await storeData.setString(
+                                //         'username', data['username']);
+                                //     await storeData.setString(
+                                //         'name', data['nama']);
+                                //     await storeData.setBool(
+                                //         'checkLogin', false);
+                                //     String? nim = storeData.getString('nim');
+                                //     String? username =
+                                //         storeData.getString('username');
+                                //     String? name = storeData.getString('name');
+                                //     Navigator.push(
+                                //         context,
+                                //         MaterialPageRoute(
+                                //             builder: (context) => homePage(
+                                //                 name: name, nim: nim)));
+                                //   } else {
+                                //     print("failed");
+                                //   }
+                                // }
+                                String _username = controllerUSername.text;
+                                String _password = controllerPassword.text;
                                 for (var data in DummyData.data) {
-                                  print("cek");
-                                  if ((controllerUSername.text ==
-                                      data['username'])) {
-                                    await storeData.setString(
-                                        'nim', data['Nim']);
-                                    await storeData.setString(
-                                        'username', data['username']);
-                                    await storeData.setString(
-                                        'name', data['nama']);
-                                    await storeData.setBool(
-                                        'checkLogin', false);
-                                    _nim = storeData.getString('nim');
-                                    String? username =
-                                        storeData.getString('username');
-                                    _name = storeData.getString('name');
-                                    _checkLogin =
-                                        storeData.getBool('checkLogin');
-                                    Navigator.push(
+                                  if (_username == data['username']) {
+                                    if (_password == data['password']) {
+                                      print("sukses");
+                                      await loginData.setString(
+                                          'nim', data['Nim']);
+                                      await loginData.setString(
+                                          'username', data['username']);
+                                      await loginData.setString(
+                                          'name', data['nama']);
+                                      await loginData.setBool('login', false);
+                                      // loginData.setBool('login', false);
+                                      // loginData.setString('username', _username);
+                                      Navigator.pushReplacement(
                                         context,
                                         MaterialPageRoute(
-                                            builder: (context) => homePage(
-                                                name: _name, nim: _nim)));
-                                  } else {
-                                    print("failed");
+                                          builder: (context) => homePage(),
+                                        ),
+                                      );
+                                    }
+                                    // else {
+                                    //   loginFail(context);
+                                    // }
                                   }
+                                  // else {
+                                  //   loginFail(context);
+                                  // }
                                 }
-                                // String _username = controllerUSername.text;
-                                // String _password = controllerPassword.text;
-
-                                // if (_username != '' && _password != '') {
-                                //   print("sukses");
-                                //   loginData.setBool('login', false);
-                                //   loginData.setString('username', _username);
-                                //   Navigator.pushReplacement(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //       builder: (context) => homePage(),
-                                //     ),
-                                //   );
-                                // }
-                                //   controllerIdNumber.text = "";
-                                //   controllerName.text = "";
+                                controllerPassword.text = "";
+                                controllerUSername.text = "";
                                 // });
                               },
                               style: ElevatedButton.styleFrom(
@@ -164,16 +177,35 @@ class _loginPageState extends State<loginPage> {
   }
 
   void check_if_already_login() async {
-    // storeData = await SharedPreferences.getInstance();
-    // checkLogin = (storeData.getBool('login') ?? true);
-    print(_checkLogin);
-    if (_checkLogin == false) {
+    loginData = await SharedPreferences.getInstance();
+    checkLogin = (loginData.getBool('login') ?? true);
+
+    print(checkLogin);
+    if (checkLogin == false) {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(
-          builder: (context) => homePage(name: _name, nim: _nim),
+        new MaterialPageRoute(
+          builder: (context) => homePage(),
         ),
       );
     }
+  }
+
+  loginFail(BuildContext context) {
+    Alert(
+      context: context,
+      type: AlertType.error,
+      title: "Login Failed",
+      desc: "Wrong Username or Password",
+      buttons: [
+        DialogButton(
+          child: Text(
+            "Back",
+            style: TextStyle(color: Colors.white, fontSize: 14),
+          ),
+          onPressed: () => Navigator.of(context, rootNavigator: true).pop(),
+        )
+      ],
+    ).show();
   }
 }

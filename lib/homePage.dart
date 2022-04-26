@@ -1,34 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:kegiatan1ab/getDetail.dart';
 import 'package:kegiatan1ab/getVaccine.dart';
+import 'package:kegiatan1ab/login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class homePage extends StatefulWidget {
-  final String? name, nim;
-  const homePage({Key? key, required this.name, required this.nim})
-      : super(key: key);
-
+  // final String? name, nim;
+  // const homePage({Key? key, required this.name, required this.nim})
+  //     : super(key: key);
+  const homePage({Key? key}) : super(key: key);
   @override
   State<homePage> createState() => _homePageState();
 }
 
 class _homePageState extends State<homePage> {
   final _fiture = ["certivicate", "result", "ehac"];
-  // late SharedPreferences loginData;
-  // String username = "";
+  late SharedPreferences loginData;
+  String username = "";
+  String name = "";
+  String nim = "";
 
-  // @override
-  // initState() {
-  //   super.initState();
-  //   initial();
-  // }
+  @override
+  initState() {
+    super.initState();
+    initial();
+  }
 
-  // void initial() async {
-  //   loginData = await SharedPreferences.getInstance();
-  //   setState(() {
-  //     username = loginData.getString('username')!;
-  //   });
-  // }
+  void initial() async {
+    loginData = await SharedPreferences.getInstance();
+    setState(() {
+      username = loginData.getString('username')!;
+      name = loginData.getString('name')!;
+      nim = loginData.getString('nim')!;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,14 +49,18 @@ class _homePageState extends State<homePage> {
             color: Colors.black,
           ),
           title: Text(
-            "Hi, ${widget.nim}",
+            "Hi, ${name}",
             style: TextStyle(color: Colors.black, fontSize: 15),
           ),
-          actions: const [
+          actions: [
             IconButton(
-              onPressed: null,
+              onPressed: () {
+                loginData.setBool('login', true);
+                Navigator.pushReplacement(context,
+                    MaterialPageRoute(builder: (context) => loginPage()));
+              },
               icon: Icon(
-                Icons.notifications_none_outlined,
+                Icons.logout_rounded,
                 color: Colors.black,
               ),
             )
