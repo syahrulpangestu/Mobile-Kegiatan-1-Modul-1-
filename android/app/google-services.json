@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "727731293642",
+    "project_id": "kegiatan1ab",
+    "storage_bucket": "kegiatan1ab.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:727731293642:android:c4bce9033e86bb31705333",
+        "android_client_info": {
+          "package_name": "com.example.kegiatan1ab"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "727731293642-v2l5s9u7vph7dtkvkbl8leppd4oocems.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4iUPJcK-fXhR5ruFKF9biW-augpD3hoI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "727731293642-v2l5s9u7vph7dtkvkbl8leppd4oocems.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

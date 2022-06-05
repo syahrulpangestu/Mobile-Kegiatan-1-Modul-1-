@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:kegiatan1ab/auth.dart';
 import 'package:kegiatan1ab/getDetail.dart';
 import 'package:kegiatan1ab/getVaccine.dart';
 import 'package:kegiatan1ab/login.dart';
@@ -13,12 +15,15 @@ class homePage extends StatefulWidget {
   State<homePage> createState() => _homePageState();
 }
 
+final FirebaseAuth auth = FirebaseAuth.instance;
+final User user = auth.currentUser!;
+
 class _homePageState extends State<homePage> {
   final _fiture = ["certivicate", "result", "ehac"];
   late SharedPreferences loginData;
   String username = "";
-  String name = "";
-  String nim = "";
+  // String name = "";
+  // String nim = "";
 
   @override
   initState() {
@@ -29,9 +34,10 @@ class _homePageState extends State<homePage> {
   void initial() async {
     loginData = await SharedPreferences.getInstance();
     setState(() {
-      username = loginData.getString('username')!;
-      name = loginData.getString('name')!;
-      nim = loginData.getString('nim')!;
+      //from firebase
+      username = user.email!;
+      // name = loginData.getString('name')!;
+      // nim = loginData.getString('nim')!;
     });
   }
 
@@ -49,13 +55,14 @@ class _homePageState extends State<homePage> {
             color: Colors.black,
           ),
           title: Text(
-            "Hi, ${name}",
+            "Hi, ${username}",
             style: TextStyle(color: Colors.black, fontSize: 15),
           ),
           actions: [
             IconButton(
               onPressed: () {
                 loginData.setBool('login', true);
+                auth.signOut();
                 Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => loginPage()));
               },
