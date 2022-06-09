@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:kegiatan1ab/auth.dart';
+import 'package:kegiatan1ab/auth_google.dart';
 import 'package:kegiatan1ab/dummy_data.dart';
 import 'package:kegiatan1ab/getDetail.dart';
 import 'package:kegiatan1ab/homePage.dart';
@@ -8,6 +9,7 @@ import 'package:kegiatan1ab/register.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:kegiatan1ab/homePage.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 
 class loginPage extends StatefulWidget {
   const loginPage({Key? key}) : super(key: key);
@@ -108,77 +110,52 @@ class _loginPageState extends State<loginPage> {
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: EdgeInsets.only(bottom: 20),
-                          ),
-                          SizedBox(
-                            width: 290,
-                            height: 50,
-                            child: ElevatedButton(
-                              child: Text("Submit"),
+                          Center(
+                            child: SignInButton(
+                              Buttons.Google,
                               onPressed: () async {
-                                String _username = controllerUSername.text;
-                                String _password = controllerPassword.text;
-                                // for (var data in DummyData.data) {
-                                //   if (_username == data['username']) {
-                                //     if (_password == data['password']) {
-                                //       print("sukses");
-                                //       await loginData.setString(
-                                //           'nim', data['Nim']);
-                                //       await loginData.setString(
-                                //           'username', data['username']);
-                                //       await loginData.setString(
-                                //           'name', data['nama']);
-                                //       await loginData.setBool('login', false);
-                                //       await Navigator.pushReplacement(
-                                //         context,
-                                //         MaterialPageRoute(
-                                //           builder: (context) => homePage(),
-                                //         ),
-                                //       );
-                                //     }
-                                //   }
-                                // }
-                                controllerPassword.text = "";
-                                controllerUSername.text = "";
-                                try {
-                                  // await loginData.setString(
-                                  //     'username', _username);
-                                  // await loginData.setString('name', _password);
-                                  await loginData.setBool('login', false);
-                                  final user = await authentication.SignIn(
-                                      email: _username, password: _password);
-                                  print(user);
-                                  if (user != false) {
-                                    Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => homePage(),
-                                      ),
-                                    );
-                                  }
-                                } on FirebaseAuthException catch (e) {
-                                  debugPrint(e.message ?? "unknown error");
-                                }
+                                AuthenticationGoogle authenticationGoogle =
+                                    AuthenticationGoogle();
+                                await authenticationGoogle.signIn();
                               },
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.lightBlue,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                              ),
                             ),
                           ),
-                          SizedBox(
-                            width: 290,
-                            height: 50,
-                            child: ElevatedButton(
-                              child: Text("Google"),
-                              onPressed: () async {},
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.lightBlue,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10.0),
+                          Padding(
+                            padding: EdgeInsets.only(bottom: 10),
+                          ),
+                          Center(
+                            child: SizedBox(
+                              width: 290,
+                              height: 50,
+                              child: ElevatedButton(
+                                child: Text("Submit"),
+                                onPressed: () async {
+                                  String _username = controllerUSername.text;
+                                  String _password = controllerPassword.text;
+                                  controllerPassword.text = "";
+                                  controllerUSername.text = "";
+                                  try {
+                                    await loginData.setBool('login', false);
+                                    final user = await authentication.SignIn(
+                                        email: _username, password: _password);
+                                    print(user);
+                                    if (user != false) {
+                                      Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => homePage(),
+                                        ),
+                                      );
+                                    }
+                                  } on FirebaseAuthException catch (e) {
+                                    debugPrint(e.message ?? "unknown error");
+                                  }
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.lightBlue,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
                                 ),
                               ),
                             ),

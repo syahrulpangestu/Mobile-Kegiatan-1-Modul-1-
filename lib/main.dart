@@ -3,6 +3,7 @@ import 'package:kegiatan1ab/getVaccine.dart';
 import 'package:kegiatan1ab/homePage.dart';
 import 'package:kegiatan1ab/login.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:kegiatan1ab/notification_handler.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -10,6 +11,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  await initializeNotification();
   runApp(MyApp());
 }
 
