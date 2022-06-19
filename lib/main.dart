@@ -5,6 +5,8 @@ import 'package:kegiatan1ab/login.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:kegiatan1ab/notification_handler.dart';
 import 'firebase_options.dart';
+import 'package:provider/provider.dart';
+import '../providers/vaccine_provider.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,10 +23,22 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'kegiatan1ab',
-      home: loginPage(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => VaccineProvider(),
+        ),
+      ],
+      child: const MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'kegiatan1ab',
+        home: loginPage(),
+      ),
     );
+    // return const MaterialApp(
+    //   debugShowCheckedModeBanner: false,
+    //   title: 'kegiatan1ab',
+    //   home: loginPage(),
+    // );
   }
 }

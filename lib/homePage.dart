@@ -4,6 +4,7 @@ import 'package:kegiatan1ab/auth.dart';
 import 'package:kegiatan1ab/getDetail.dart';
 import 'package:kegiatan1ab/getVaccine.dart';
 import 'package:kegiatan1ab/login.dart';
+import 'package:kegiatan1ab/screens/view_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class homePage extends StatefulWidget {
@@ -373,7 +374,9 @@ class _homePageState extends State<homePage> {
                           ElevatedButton(
                             onPressed: () {
                               Navigator.of(context).push(
-                                MaterialPageRoute(builder: (_) => getVaccine()),
+                                // MaterialPageRoute(builder: (_) => getVaccine()),
+                                MaterialPageRoute(
+                                    builder: (_) => VaccinePage()),
                               );
                             },
                             child: Image(
