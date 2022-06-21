@@ -37,7 +37,18 @@ class ActionWidget extends StatelessWidget {
                 fillColor: Colors.grey,
                 hintText: "Masukan Nama",
               ),
-            )
+            ),
+            TextField(
+              controller: _nikController,
+              decoration: const InputDecoration(
+                labelText: 'NIK',
+                border: InputBorder.none,
+                filled: true,
+                isDense: true,
+                fillColor: Colors.grey,
+                hintText: "Masukan NIK",
+              ),
+            ),
           ],
         ),
       ),
@@ -50,13 +61,13 @@ class ActionWidget extends StatelessWidget {
         ),
         TextButton(
           onPressed: () {
-            if (_namaController.text.isEmpty) {
+            if (_namaController.text.isEmpty && _nikController.text.isEmpty) {
               showDialog(
                   context: context,
                   builder: (context) {
                     return const AlertDialog(
                       title: Text('Error'),
-                      content: Text('Nama tidak boleh kosong'),
+                      content: Text('tidak boleh kosong'),
                     );
                   });
             } else {
