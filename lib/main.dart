@@ -7,6 +7,7 @@ import 'package:kegiatan1ab/notification_handler.dart';
 import 'firebase_options.dart';
 import 'package:provider/provider.dart';
 import '../providers/vaccine_provider.dart';
+import 'service/api_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +24,12 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    ApiService().getBeritaModel().then((value) => print("value: $value"));
+    // ApiService().getBeritaModel().then(
+    //   (value) {
+    //     print("value: $value");
+    //   },
+    // );
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(

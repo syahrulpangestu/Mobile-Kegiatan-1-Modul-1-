@@ -36,7 +36,7 @@ class VaccinePage extends StatelessWidget {
                       child: Card(
                         child: ListTile(
                           title: Text(vaccine.nama),
-                          subtitle: Text(vaccine.nik),//TODO: nik
+                          subtitle: Text(vaccine.nik), //TODO: nik
                           onTap: () {
                             showDialog(
                               context: context,
